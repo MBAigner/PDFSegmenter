@@ -10,10 +10,11 @@ This library builds a graph-representation of the content of PDFs. The graph is 
 
 Example call: 
 
-    converter = PDFSegmenter(pdf)
-    result = converter.convert()
+    segmenter = PDFSegmenter(pdf)
+    result = segmenter.segments2json()
+    text = segmenter.segments2text()
 
-A file is the only parameter mandatory for a graph construction.
+A file is the only parameter mandatory for the page segmentation.
 Beside the graph conversion, media boxes of a document can be accessed using ```get_media_boxes()``` and the page count over ```get_page_count()```.
 General document layout characteristics are stored in a ```converter.meta``` object.
 
