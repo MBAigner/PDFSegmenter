@@ -1,5 +1,5 @@
 
-from PDFSegmenter.util import constants
+from util import constants
 from PDFSegmenter.detection.LoopClassifier import LoopClassifier
 
 

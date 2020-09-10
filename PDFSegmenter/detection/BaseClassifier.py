@@ -25,7 +25,8 @@ class BaseClassifier(object):
                                               use_vertical_overlap,
                                               page_ratio_x, page_ratio_y, x_eps, y_eps, font_eps_h, font_eps_v,
                                               width_pct_eps, width_page_eps)
-        self.graphs = self.graph_converter.convert()
+        res = self.graph_converter.convert()
+        self.graphs = res["graphs"]
         self.media_box = self.graph_converter.get_media_boxes()
         self.graphs = AgglomerativeGraphCluster(self.graphs, self.file).assign_clusters()
         self.meta = self.graph_converter.meta
