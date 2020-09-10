@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import silhouette_score
-from util import GraphUtil, constants, StorageUtil
+from util import GraphUtil, constants
 import editdistance
 
 
@@ -22,9 +22,6 @@ class AgglomerativeGraphCluster(object):
             labels = self.create_clusters(graph)
             nx.set_node_attributes(graph, labels, 'cluster_label')
             graphs_labeled.append(graph)
-        if constants.STORE_CLUSTERS and self.name is not None:
-            StorageUtil.save_object(graphs_labeled, constants.CLUSTER_PATH,
-                                    StorageUtil.cut_file_type(StorageUtil.get_file_name(self.name)))
         return graphs_labeled
 
     def create_clusters(self, graph):

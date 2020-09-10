@@ -1,0 +1,5 @@
+numpy
+networkx==2.2
+scikit-learn==0.20.0
+GraphConverter==0.3
+editdistance==0.5.3

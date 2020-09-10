@@ -1,31 +1,38 @@
 import networkx as nx
 
 from PDFSegmenter.clustering.Agglomerative_Clustering import AgglomerativeGraphCluster
-# from PDFSegmenter.converter.Graph_Converter import GraphConverter TODO requirement
+from GraphConverter import GraphConverter
 from PDFSegmenter.util import constants
 from PDFSegmenter.util import StorageUtil
 from PDFSegmenter.util import GraphUtil
-from os.path import exists
 import ast
 import numpy as np
 
 
 class BaseClassifier(object):
 
-    def __init__(self, file):
+    def __init__(self, file, merge_boxes=False, regress_parameters=False,
+                 use_font=True, use_width=True, use_rect=True, use_horizontal_overlap=False,
+                 use_vertical_overlap=False,
+                 page_ratio_x=2, page_ratio_y=2, x_eps=2, y_eps=2, font_eps_h=1, font_eps_v=1,
+                 width_pct_eps=.4, width_page_eps=.5):
         if file is None:
             return
         self.file = file
         self.file_name = StorageUtil.get_file_name(self.file)
-        self.graphs, self.meta = GraphConverter(self.file).convert_graph()
+        self.graph_converter = GraphConverter(self.file, merge_boxes, regress_parameters,
+                                              use_font, use_width, use_rect, use_horizontal_overlap,
+                                              use_vertical_overlap,
+                                              page_ratio_x, page_ratio_y, x_eps, y_eps, font_eps_h, font_eps_v,
+                                              width_pct_eps, width_page_eps)
+        self.graphs = self.graph_converter.convert()
+        self.media_box = self.graph_converter.get_media_boxes()
         self.graphs = AgglomerativeGraphCluster(self.graphs, self.file).assign_clusters()
+        self.meta = self.graph_converter.meta
 
     def get_result(self, classify_table):
         result = {}
-        if not exists(constants.CSV_PATH + StorageUtil.cut_file_type(self.file_name) + ".pkl"):
-            return result
-        media_box = StorageUtil.load_object(constants.CSV_PATH,
-                                            StorageUtil.cut_file_type(self.file_name))
+        media_box = self.media_box
         for page, graph in enumerate(self.graphs):
             result[page + 1] = {}
             result[page + 1]["bounding_box"] = (media_box[page]["x0page"],
@@ -105,3 +112,6 @@ class BaseClassifier(object):
     def classify_plot(graph_cluster):
         # TODO
         return False
+
+    def get_graphs(self):
+        return self.graphs
