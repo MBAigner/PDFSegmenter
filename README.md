@@ -4,15 +4,17 @@ This library builds a graph-representation of the content of PDFs. The graph is 
 
 ## How-to
 
-* Pass the path of the PDF file which is wanted to be converted to ```PDFSegmenter```.
-* Media boxes of a PDF can be accessed using ```get_media_boxes()```, the page count over ```get_page_count()```
+* Pass the path of the PDF file (as a string) which is wanted to be converted to ```PDFSegmenter```.
+* Call the function ```segment_document()```.
 * The function ```get_labeled_graphs()``` returns page-wise document graph representations as a list of ```networkx``` graphs. The labels indicate a clustering assignment.
 * ```segments2json()``` returns a JSON representation of the segmented document.
 * ```segments2text()``` returns a textual representation of the segmented document. This can be either annotated (lists, text and tables are supported) or not and controlled via the boolean parameter ```annotate```.
+* Media boxes of a PDF can be accessed using ```get_media_boxes()```, the page count over ```get_page_count()```.
 
 Example call: 
 
     segmenter = PDFSegmenter(pdf)
+    segmenter.segment_document()
     result = segmenter.segments2json()
     text = segmenter.segments2text()
     graphs = get_labeled_graphs()
@@ -37,7 +39,7 @@ tbd
 
 The following image shows a resulting document graph representation when using the ```GraphConverter```.
 
-<center><img src="./documentation/visibility_graph.png", height="300", width="200" /></center>
+<center><img src="./documentation/labeled_graph.png", height="300", width="200" /></center>
 
 ## Settings
 
