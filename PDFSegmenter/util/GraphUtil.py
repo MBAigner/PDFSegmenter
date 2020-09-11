@@ -4,6 +4,11 @@ from util import constants
 
 
 def get_graph_bounding_box(graph):
+    """
+
+    :param graph:
+    :return:
+    """
     x_0 = nx.get_node_attributes(graph, "x_0")
     x_1 = nx.get_node_attributes(graph, "x_1")
     y_0 = nx.get_node_attributes(graph, "y_0")
@@ -13,12 +18,25 @@ def get_graph_bounding_box(graph):
 
 
 def is_overlapping(bbox1, bbox2):
+    """
+
+    :param bbox1:
+    :param bbox2:
+    :return:
+    """
     overlap = (max(bbox1[0], bbox2[0]), min(bbox1[1], bbox2[1]),
                max(bbox1[2], bbox2[2]), min(bbox1[3], bbox2[3]))
     return overlap[0] < overlap[1] and overlap[2] < overlap[3]
 
 
 def is_in_region(bbox1, bbox2, tol=5):
+    """
+
+    :param bbox1:
+    :param bbox2:
+    :param tol:
+    :return:
+    """
     return bbox1[0]+tol >= bbox2[0] and \
            bbox1[1]-tol <= bbox2[1] and \
            bbox1[2]+tol >= bbox2[2] and \
@@ -34,16 +52,37 @@ def connected_component_subgraphs(G):
 
 
 def get_unique_attr(graph_cluster, attr):
+    """
+
+    :param graph_cluster:
+    :param attr:
+    :return:
+    """
     return list(set(nx.get_node_attributes(graph_cluster, attr).values()))
 
 
 def get_unique_rounded_attr(graph_cluster, attr):
+    """
+
+    :param graph_cluster:
+    :param attr:
+    :return:
+    """
     return list(set(map(lambda x: round(x),
                         nx.get_node_attributes(graph_cluster, attr).values())))
 
 
 def get_unique_attr_from_filter(graph_cluster, attr, filter_attr, filter_value,
                                 negate=False):
+    """
+
+    :param graph_cluster:
+    :param attr:
+    :param filter_attr:
+    :param filter_value:
+    :param negate:
+    :return:
+    """
     if not negate:
         g = graph_cluster.subgraph([x for x, y in
                                     graph_cluster.nodes(data=True)

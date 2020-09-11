@@ -17,6 +17,10 @@ class AgglomerativeGraphCluster(object):
         self.meta = meta
 
     def assign_clusters(self):
+        """
+
+        :return:
+        """
         graphs_labeled = []
         for graph in self.graphs:
             labels = self.create_clusters(graph)
@@ -25,6 +29,11 @@ class AgglomerativeGraphCluster(object):
         return graphs_labeled
 
     def create_clusters(self, graph):
+        """
+
+        :param graph:
+        :return:
+        """
         # use subgraph with edges weighted by Levenshtein distance
         G_lev = graph.edge_subgraph(
             [(e[0], e[1], e[2]) for e in graph.edges(keys=True, data=True)
@@ -82,6 +91,13 @@ class AgglomerativeGraphCluster(object):
         return clustering_labels
 
     def calculate_distance_weight(self, id_start, id_end, edge):
+        """
+
+        :param id_start:
+        :param id_end:
+        :param edge:
+        :return:
+        """
         node_start = self.nodes[id_start]
         node_end = self.nodes[id_end]
         scaling = 1
@@ -132,6 +148,12 @@ class AgglomerativeGraphCluster(object):
 
     @staticmethod
     def get_normalized_lev_dist(text1, text2):
+        """
+
+        :param text1:
+        :param text2:
+        :return:
+        """
         len_text1 = len(text1)
         len_text2 = len(text2)
         if len_text1 > 0 and len_text2 > 0:

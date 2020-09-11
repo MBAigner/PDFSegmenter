@@ -1,4 +1,4 @@
-
+from PDFSegmenter.structure_recognition.ResultParser import ResultParser
 from util import constants
 from PDFSegmenter.detection.LoopClassifier import LoopClassifier
 
@@ -31,7 +31,8 @@ class PDFSegmenter(object):
                                      page_ratio_x=page_ratio_x, page_ratio_y=page_ratio_y, x_eps=x_eps, y_eps=y_eps,
                                      font_eps_h=font_eps_h, font_eps_v=font_eps_v,
                                      width_pct_eps=width_pct_eps, width_page_eps=width_page_eps)
-
+        self.json = None
+        self.rp = None
 
     def set_attributes(self, horizontal_merge_threshold=20, vertical_merge_threshold=20, weak_merge=True,
                      horizontal_weak_merge_threshold=20, vertical_weak_merge_threshold=20,
@@ -40,6 +41,31 @@ class PDFSegmenter(object):
                      use_tokens=True, use_loops=True, token_weight=1, loop_weight=1, font_weight=3,
                      lev_dist_weight=1, horizontal_scaling=0, diagonal_scaling=0, classify_text=True,
                      classify_list=True, classify_plot=True):
+        """
+
+        :param horizontal_merge_threshold:
+        :param vertical_merge_threshold:
+        :param weak_merge:
+        :param horizontal_weak_merge_threshold:
+        :param vertical_weak_merge_threshold:
+        :param loop_tolerance:
+        :param use_lev_distance:
+        :param use_gower_distance:
+        :param use_text:
+        :param use_font_dist:
+        :param use_tokens:
+        :param use_loops:
+        :param token_weight:
+        :param loop_weight:
+        :param font_weight:
+        :param lev_dist_weight:
+        :param horizontal_scaling:
+        :param diagonal_scaling:
+        :param classify_text:
+        :param classify_list:
+        :param classify_plot:
+        :return:
+        """
         constants.HORIZONTAL_MERGE_THRESHOLD = horizontal_merge_threshold
         constants.VERTICAL_MERGE_THRESHOLD = vertical_merge_threshold
         constants.WEAK_MERGE = weak_merge
@@ -63,10 +89,36 @@ class PDFSegmenter(object):
         constants.CLASSIFY_PLOT = classify_plot
 
     def segment_document(self):
-        res = self.classifier.get_result()
+        """
+
+        :return:
+        """
+        self.json = self.classifier.classify_table_regions()
 
     def get_labeled_graphs(self):
+        """
+
+        :return:
+        """
         return self.classifier.get_graphs()
 
-    def get_graphs(self):
-        return self.classifier.get_graphs()
+    def segments2json(self):
+        """
+
+        :return:
+        """
+        if self.json is None:
+            self.segment_document()
+        return self.json
+
+    def segments2text(self, annotate=True):
+        """
+
+        :param annotate:
+        :return:
+        """
+        if self.json is None:
+            self.segment_document()
+        if self.rp is None:
+            self.rp = ResultParser(self.json)
+        return self.rp.get_text(annotate)

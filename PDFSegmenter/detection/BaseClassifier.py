@@ -32,6 +32,11 @@ class BaseClassifier(object):
         self.meta = self.graph_converter.meta
 
     def get_result(self, classify_table):
+        """
+
+        :param classify_table:
+        :return:
+        """
         result = {}
         media_box = self.media_box
         for page, graph in enumerate(self.graphs):
@@ -60,6 +65,16 @@ class BaseClassifier(object):
 
     @staticmethod
     def classify_cluster_element(page, meta, graph_cluster, graph, res_bounding, classify_table):
+        """
+
+        :param page:
+        :param meta:
+        :param graph_cluster:
+        :param graph:
+        :param res_bounding:
+        :param classify_table:
+        :return:
+        """
         if constants.CLASSIFY_LIST and BaseClassifier.classify_list(graph_cluster):
             return "list"
         elif constants.CLASSIFY_PLOT and BaseClassifier.classify_plot(graph_cluster):
@@ -73,6 +88,11 @@ class BaseClassifier(object):
 
     @staticmethod
     def classify_list(graph_cluster):
+        """
+
+        :param graph_cluster:
+        :return:
+        """
         x0s = GraphUtil.get_unique_rounded_attr(graph_cluster, "x_0")
         x1s = GraphUtil.get_unique_rounded_attr(graph_cluster, "x_1")
         xcs = GraphUtil.get_unique_rounded_attr(graph_cluster, "pos_x")
@@ -82,6 +102,13 @@ class BaseClassifier(object):
 
     @staticmethod
     def classify_list_on_x_set(graph_cluster, xs, align):
+        """
+
+        :param graph_cluster:
+        :param xs:
+        :param align:
+        :return:
+        """
         if len(xs) != 2:
             return False
         text_left = GraphUtil.get_unique_attr_from_filter(graph_cluster, "masked",
@@ -91,6 +118,13 @@ class BaseClassifier(object):
 
     @staticmethod
     def classify_text(graph_cluster, meta, page):
+        """
+
+        :param graph_cluster:
+        :param meta:
+        :param page:
+        :return:
+        """
         x0s = list(map(lambda x: round(x),
                        list(nx.get_node_attributes(graph_cluster, "x_0").values())))
         x1s = list(map(lambda x: round(x),
@@ -111,8 +145,17 @@ class BaseClassifier(object):
 
     @staticmethod
     def classify_plot(graph_cluster):
+        """
+
+        :param graph_cluster:
+        :return:
+        """
         # TODO
         return False
 
     def get_graphs(self):
+        """
+
+        :return:
+        """
         return self.graphs

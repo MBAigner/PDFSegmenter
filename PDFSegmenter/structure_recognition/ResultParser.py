@@ -1,13 +1,15 @@
 
 class ResultParser(object):
 
-    MARK_SEGMENTS = True
-
     def __init__(self, doc):
         self.doc = doc
         self.parsed = False
 
     def parse_content(self):
+        """
+
+        :return:
+        """
         for page in self.doc:
             # sort clusters
             bbox = self.doc[page]["bounding_box"]
@@ -42,17 +44,27 @@ class ResultParser(object):
         self.parsed = True
         return self.doc
 
-    def get_text(self):
+    def get_text(self, annotate):
+        """
+
+        :param annotate:
+        :return:
+        """
         if not self.parsed:
             self.parse_content()
         text = ""
         for page in self.doc:
             for cluster in self.doc[page]:
                 if cluster != "bounding_box":
-
-                    text += self.get_segment_marker(self.doc[page][cluster])
+                    text += self.get_segment_marker(self.doc[page][cluster], annotate)
                     text += self.doc[page][cluster]["text"] + "\n"
         return text
 
-    def get_segment_marker(self, segment):
-        return "\n[!" + segment["element"].upper() + "]\n" if self.MARK_SEGMENTS else ""
+    def get_segment_marker(self, segment, annotate):
+        """
+
+        :param segment:
+        :param annotate:
+        :return:
+        """
+        return "\n[!" + segment["element"].upper() + "]\n" if annotate else ""

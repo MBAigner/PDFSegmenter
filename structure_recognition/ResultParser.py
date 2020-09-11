@@ -8,6 +8,10 @@ class ResultParser(object):
         self.parsed = False
 
     def parse_content(self):
+        """
+
+        :return:
+        """
         for page in self.doc:
             # sort clusters
             bbox = self.doc[page]["bounding_box"]
@@ -43,6 +47,10 @@ class ResultParser(object):
         return self.doc
 
     def get_text(self):
+        """
+
+        :return:
+        """
         if not self.parsed:
             self.parse_content()
         text = ""
@@ -55,4 +63,9 @@ class ResultParser(object):
         return text
 
     def get_segment_marker(self, segment):
+        """
+
+        :param segment:
+        :return:
+        """
         return "\n[!" + segment["element"].upper() + "]\n" if self.MARK_SEGMENTS else ""

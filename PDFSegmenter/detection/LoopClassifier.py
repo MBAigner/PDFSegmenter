@@ -18,14 +18,30 @@ class LoopClassifier(BaseClassifier):
                          width_pct_eps=width_pct_eps, width_page_eps=width_page_eps)
 
     def classify_table_regions(self):
+        """
+
+        :return:
+        """
         return super().get_result(self.classify_table)
 
     # count rectangle-vertices
     def classify_table(self, graph_cluster, graph=None, bounding_box=None):
+        """
+
+        :param graph_cluster:
+        :param graph:
+        :param bounding_box:
+        :return:
+        """
         return loop_score(graph_cluster) > constants.LOOP_TOLERANCE
 
 
 def loop_score(graph_cluster):
+    """
+
+    :param graph_cluster:
+    :return:
+    """
     nodes = graph_cluster.nodes(data=True)
     rect_count = 0
     for node in nodes:

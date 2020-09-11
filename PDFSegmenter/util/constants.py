@@ -1,6 +1,7 @@
 
 # base classifier thresholds
 LOOP_TOLERANCE = .4
+BASELINE_THRESHOLD = .5
 
 # merge settings
 HORIZONTAL_MERGE_THRESHOLD = 20

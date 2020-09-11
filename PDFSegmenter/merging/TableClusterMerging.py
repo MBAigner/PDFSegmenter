@@ -7,6 +7,10 @@ class TableClusterMerging(object):
         self.result = result
 
     def get_merged_results(self):
+        """
+
+        :return:
+        """
         for page in self.result:
             prev = None
             for elt in ["table"]:  # TODO possibly adapt for lists (but with consideration of none and text inbetween)
@@ -32,11 +36,23 @@ class TableClusterMerging(object):
 
     @staticmethod
     def get_elements(result_page, elt):
+        """
+
+        :param result_page:
+        :param elt:
+        :return:
+        """
         return {k: v for k, v in result_page.items() if k != "bounding_box" and
                 result_page[k]["element"] == elt}
 
     @staticmethod
     def is_adjacent(pt, table):
+        """
+
+        :param pt:
+        :param table:
+        :return:
+        """
         # check if table1 y1 = table2 y0 or vice versa
         # or: table1 x1 = table2 x0 or vice versa
         return (
@@ -60,6 +76,12 @@ class TableClusterMerging(object):
     @staticmethod
     # table contained in other table
     def is_included(pt, table):
+        """
+
+        :param pt:
+        :param table:
+        :return:
+        """
         return (
                         pt["bounding_box"][0] >= table["bounding_box"][0] and
                         pt["bounding_box"][1] <= table["bounding_box"][1] and
@@ -74,6 +96,12 @@ class TableClusterMerging(object):
 
     @staticmethod
     def is_weak_adjacent(pt, table):
+        """
+
+        :param pt:
+        :param table:
+        :return:
+        """
         shared_axis = TableClusterMerging.shares_same_axis(pt, table)
         overlap_axis = TableClusterMerging.is_one_dimensional_overlapping(pt, table)
         if overlap_axis == 0 or shared_axis == 0:
@@ -82,6 +110,12 @@ class TableClusterMerging(object):
 
     @staticmethod
     def is_one_dimensional_overlapping(pt, table):
+        """
+
+        :param pt:
+        :param table:
+        :return:
+        """
         overlap_axis = 0
         if (max(pt["bounding_box"][0], table["bounding_box"][0]) <=
                 min(pt["bounding_box"][1], table["bounding_box"][1])):
@@ -93,6 +127,12 @@ class TableClusterMerging(object):
 
     @staticmethod
     def shares_same_axis(pt, table):
+        """
+
+        :param pt:
+        :param table:
+        :return:
+        """
         axis_shared = 0
         if abs(pt["bounding_box"][0] - table["bounding_box"][0]) < constants.HORIZONTAL_WEAK_MERGE_THRESHOLD or \
            abs(pt["bounding_box"][1] - table["bounding_box"][1]) < constants.HORIZONTAL_WEAK_MERGE_THRESHOLD or \
