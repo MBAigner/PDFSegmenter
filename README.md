@@ -95,6 +95,10 @@ Edge thresholds:
 
 ## Output Format
 
+### JSON
+
+### Text
+
 ### Graph
 
 As a result, a list of ```networkx``` graphs is returned.
