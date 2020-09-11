@@ -39,7 +39,7 @@ tbd
 
 The following image shows a resulting document graph representation when using the ```GraphConverter```.
 
-<center><img src="./documentation/labeled_graph.png", height="300", width="200" /></center>
+<center><img src="./documentation/clustered_graph.png", height="300", width="200" /></center>
 
 ## Settings
 
