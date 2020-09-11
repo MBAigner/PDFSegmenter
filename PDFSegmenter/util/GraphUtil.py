@@ -1,6 +1,6 @@
 import networkx as nx
 import numpy as np
-from util import constants
+from PDFSegmenter.util import constants
 
 
 def get_graph_bounding_box(graph):
