@@ -9,7 +9,6 @@ This library builds a graph-representation of the content of PDFs. The graph is 
 * The function ```get_labeled_graphs()``` returns page-wise document graph representations as a list of ```networkx``` graphs. The labels indicate a clustering assignment.
 * ```segments2json()``` returns a JSON representation of the segmented document.
 * ```segments2text()``` returns a textual representation of the segmented document. This can be either annotated (lists, text and tables are supported) or not and controlled via the boolean parameter ```annotate```.
-* Media boxes of a PDF can be accessed using ```get_media_boxes()```, the page count over ```get_page_count()```.
 
 Example call: 
 
@@ -20,8 +19,6 @@ Example call:
     graphs = get_labeled_graphs()
 
 A file is the only parameter mandatory for the page segmentation.
-Beside the graph conversion, media boxes of a document can be accessed using ```get_media_boxes()``` and the page count over ```get_page_count()```.
-General document layout characteristics are stored in a ```converter.meta``` object.
 
 A more detailed example usage is also given in ```Tester.py```.
 
@@ -84,22 +81,17 @@ Edge thresholds:
 
 ## Project Structure
 
-* ```GraphConverter.py```: contains the ```GraphConverter``` class for converting documents into graphs.
-* ```models```:  contains regression models for layout-independent document processing
-* ```document```: contains the ```DocumentMetaCharacteristics``` class for a layout-independent document processing or managing default thresholds
-* ```merging```: contains the ```PDFTextBoxMerging``` class for an aggregation of layout elements treating the visual rectangle structures of a document
-* ```util```:
-  * ```constants```: paths, thresholds
-  * ```StorageUtil```: store/load functionalities
-  * ```RectangleUtil```: functionalities for visual rectangle constraints
-* ```test/Tester.py```: Python script for testing the ```GraphConverter```
-* ```pdf```: example PDF input files for tests
+tbd
 
 ## Output Format
 
 ### JSON
 
+tbd
+
 ### Text
+
+tbd
 
 ### Graph
 
@@ -144,17 +136,6 @@ All nodes contain the following content attributes:
 * ```in_element_ids```: contains IDs of surrounding visual elements such as rectangles or lists. They are stored as a list [left, right, top, bottom]. -1 is indicating that there is no adjacent visual element.
 * ```in_element```: indicates based on in_element_ids whether an element is stored in a visual rectangle representation (stored as "rectangle") or not (stored as "none").
 * ```is_loop```: indicates whether or not a node is connected via a rectangular loop
-
-The media boxes possess the following entries in a dictionary:
-
-* ```x0```: Left x page crop box coordinate
-* ```x1```: Right x page crop box coordinate
-* ```y0```: Top y page crop box coordinate
-* ```y1```: Bottom y page crop box coordinate
-* ```x0page```: Left x page coordinate
-* ```x1page```: Right x page coordinate
-* ```y0page```: Top y page coordinate
-* ```y1page```: Bottom y page coordinate
 
 ## Acknowledgements
 

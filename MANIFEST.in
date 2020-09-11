@@ -1,0 +1,12 @@
+include README.rst
+include setup.cfg
+include setup.py
+include PDFSegmenter/PDFSegmenter.py
+include PDFSegmenter/__init__.py
+include PDFSegmenter/clustering/Agglomerative_Clustering.py
+include PDFSegmenter/detection/BaseClassifier.py
+include PDFSegmenter/merging/TableClusterMerging.py
+include PDFSegmenter/structure_recognition/ResultParser.py
+include PDFSegmenter/util/constants.py
+include PDFSegmenter/util/GraphUtil.py
+include PDFSegmenter/util/StorageUtil.py
