@@ -1,18 +1,21 @@
 # PDF Segmenter
 
-This library builds a graph-representation of the content of PDFs. The graph is then clustered, resulting page segments are classified and returned. Tables are retrieved formatted as a CSV.
+This library builds a graph-representation of the content of PDFs. The graph is then clustered, resulting page segments are classified and returned. Tables are retrieved formatted in a CSV-style.
 
 ## How-to
 
 * Pass the path of the PDF file which is wanted to be converted to ```PDFSegmenter```.
-* Call the function ```convert()```. The document graph representations are returned page-wise as a list of ```networkx``` graphs.
 * Media boxes of a PDF can be accessed using ```get_media_boxes()```, the page count over ```get_page_count()```
+* The function ```get_labeled_graphs()``` returns page-wise document graph representations as a list of ```networkx``` graphs. The labels indicate a clustering assignment.
+* ```segments2json()``` returns a JSON representation of the segmented document.
+* ```segments2text()``` returns a textual representation of the segmented document. This can be either annotated (lists, text and tables are supported) or not and controlled via the boolean parameter ```annotate```.
 
 Example call: 
 
     segmenter = PDFSegmenter(pdf)
     result = segmenter.segments2json()
     text = segmenter.segments2text()
+    graphs = get_labeled_graphs()
 
 A file is the only parameter mandatory for the page segmentation.
 Beside the graph conversion, media boxes of a document can be accessed using ```get_media_boxes()``` and the page count over ```get_page_count()```.
@@ -22,12 +25,35 @@ A more detailed example usage is also given in ```Tester.py```.
 
 ## Example
 
+### JSON
+
+tbd
+
+### Annotated text
+
+tbd
+
+### Graph
+
 The following image shows a resulting document graph representation when using the ```GraphConverter```.
 
 <center><img src="./documentation/visibility_graph.png", height="300", width="200" /></center>
 
-
 ## Settings
+
+### Clustering
+
+tbd
+
+### Merging
+
+tbd
+
+### Classification
+
+tbd
+
+### Graph
 
 General parameters:
 
@@ -69,6 +95,8 @@ Edge thresholds:
 
 ## Output Format
 
+### Graph
+
 As a result, a list of ```networkx``` graphs is returned.
 Each graph encapsulates a structured representation of a single page.
 
@@ -109,6 +137,7 @@ All nodes contain the following content attributes:
 * ```box```: box extracted by pdfminer Layout Analysis
 * ```in_element_ids```: contains IDs of surrounding visual elements such as rectangles or lists. They are stored as a list [left, right, top, bottom]. -1 is indicating that there is no adjacent visual element.
 * ```in_element```: indicates based on in_element_ids whether an element is stored in a visual rectangle representation (stored as "rectangle") or not (stored as "none").
+* ```is_loop```: indicates whether or not a node is connected via a rectangular loop
 
 The media boxes possess the following entries in a dictionary:
 
@@ -120,11 +149,6 @@ The media boxes possess the following entries in a dictionary:
 * ```x1page```: Right x page coordinate
 * ```y0page```: Top y page coordinate
 * ```y1page```: Bottom y page coordinate
-
-
-## Future Work
-
-* The ```GraphConverter``` will be extended using OCR processing for images in order to support more unstructured types than solely PDFs.
 
 ## Acknowledgements
 
