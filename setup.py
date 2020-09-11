@@ -7,7 +7,7 @@ setup(
   name='PDFSegmenter',
   packages=['PDFSegmenter', 'PDFSegmenter.util', 'PDFSegmenter.clustering', 'PDFSegmenter.detection',
             'PDFSegmenter.merging', 'PDFSegmenter.structure_recognition'],
-  version='0.4',
+  version='0.1',
   license='MIT',
   description='This library builds a graph-representation of the content of PDFs. The graph is then clustered, resulting page segments are classified and returned. Tables are retrieved formatted as a CSV.',
   long_description=long_description,
