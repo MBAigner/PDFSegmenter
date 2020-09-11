@@ -62,5 +62,11 @@ class PDFSegmenter(object):
         constants.CLASSIFY_LIST = classify_list
         constants.CLASSIFY_PLOT = classify_plot
 
+    def segment_document(self):
+        res = self.classifier.get_result()
+
+    def get_labeled_graphs(self):
+        return self.classifier.get_graphs()
+
     def get_graphs(self):
         return self.classifier.get_graphs()
